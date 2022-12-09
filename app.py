@@ -20,9 +20,10 @@ app = Flask(__name__)
 
 # send in blue
 configuration = sib_api_v3_sdk.Configuration()
-configuration.api_key['api-key'] = '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'
+configuration.api_key['api-key'] = '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'
 
 app.config['MONGODB_SETTINGS'] = {'db': 'roboveda','host': 'localhost','port': 27017}
+# app.config["MONGODB_SETTINGS"] = {'DB': "my_app", "host":'mongodb://localhost:27017'}
 
 db = MongoEngine()
 db.init_app(app)
