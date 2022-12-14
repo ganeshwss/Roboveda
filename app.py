@@ -3,6 +3,7 @@ from flask import Flask, Response, request, jsonify
 from flask_mongoengine import MongoEngine
 from os import environ
 import time
+from flask_cors import CORS, cross_origin #to solve cors issue
 import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
 import razorpay
@@ -17,6 +18,7 @@ keysecret = environ.get('RAZORPAY_SECRET_KEY')
 razorpay_client = razorpay.Client(auth=(keyid, keysecret))
 
 app = Flask(__name__)
+CORS(app) #set cors 
 
 # send in blue
 configuration = sib_api_v3_sdk.Configuration()
