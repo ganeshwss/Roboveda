@@ -1,7 +1,7 @@
 import json
 from flask import Flask, Response, request, jsonify
 from flask_mongoengine import MongoEngine
-import os
+from os import environ
 import time
 import sib_api_v3_sdk
 from sib_api_v3_sdk.rest import ApiException
@@ -11,8 +11,8 @@ import razorpay
 ##################################################################################################################################################################################################################
 
 # Razorpay
-keyid = 'rzp_test_hAYTO5a3WVZkPe'
-keysecret = 'RhY3gSMz6U1ejJXdliestlZu'
+keyid = environ.get('RAZORPAY_KEY_ID')
+keysecret = environ.get('RAZORPAY_SECRET_KEY')
 
 razorpay_client = razorpay.Client(auth=(keyid, keysecret))
 
@@ -20,9 +20,9 @@ app = Flask(__name__)
 
 # send in blue
 configuration = sib_api_v3_sdk.Configuration()
-configuration.api_key['api-key'] = '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'
+configuration.api_key['api-key'] = environ.get('SENDINBLUE_API_KEY')
 
-app.config['MONGODB_SETTINGS'] = {'db': 'roboveda','host': 'localhost','port': 27017}
+app.config['MONGODB_SETTINGS'] = {'db': 'roboveda','host': 'mongodb+srv://root:root@roboveda.feslyvu.mongodb.net/test','port': 27017}
 # app.config["MONGODB_SETTINGS"] = {'DB': "my_app", "host":'mongodb://localhost:27017'}
 
 db = MongoEngine()
@@ -78,7 +78,7 @@ def create_record(*args, **kwargs):
     user.save()
 
     # api_response.save()
-    return jsonify(user.to_json(),{"message":"Data added successfully !"})    
+    return jsonify(user.to_json(),{"message":"Data added successfully !",'status':200,'error':True})    
 
 if __name__ == "__main__":
     app.run(debug=True)
